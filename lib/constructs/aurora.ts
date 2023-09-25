@@ -98,7 +98,7 @@ export class Aurora extends Construct {
     // DB Cluster
     const dbCluster = new cdk.aws_rds.DatabaseCluster(this, "Default", {
       engine: cdk.aws_rds.DatabaseClusterEngine.auroraPostgres({
-        version: cdk.aws_rds.AuroraPostgresEngineVersion.VER_14_5,
+        version: cdk.aws_rds.AuroraPostgresEngineVersion.VER_14_6,
       }),
       writer: cdk.aws_rds.ClusterInstance.serverlessV2("Instance", {
         allowMajorVersionUpgrade: false,
@@ -111,6 +111,8 @@ export class Aurora extends Construct {
         instanceIdentifier: "db-instance",
         caCertificate: cdk.aws_rds.CaCertificate.RDS_CA_RDS4096_G1,
       }),
+      serverlessV2MaxCapacity: 1.0,
+      serverlessV2MinCapacity: 0.5,
       backup: {
         retention: cdk.Duration.days(7),
         preferredWindow: "16:00-16:30",
